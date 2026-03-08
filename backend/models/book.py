@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text
 from backend.db.database import Base
 
-class Book(Base)
+class Book(Base):
     __tablename__ = "books"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -10,5 +10,5 @@ class Book(Base)
     summary=Column(Text, nullable=True)
     audio_path=Column(String, nullable=True)
     cover_path=Column(String,nullable=True)
-    duration=Column(String,nullable = True)
+    duration=Column(Integer,nullable = True)
     category = Column(String, nullable=True)
