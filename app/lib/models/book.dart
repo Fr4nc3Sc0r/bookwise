@@ -5,7 +5,7 @@ class Book {
   final String? summary;
   final String? audioPath;
   final String? coverPath;
-  final int duration;
+  final int? duration;
   final String? category;
 
   Book({
@@ -20,27 +20,27 @@ class Book {
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {
-    int _parseInt(dynamic value, {int fallback = 0}) {
+    int parseInt(dynamic value, {int fallback = 0}) {
       if (value == null) return fallback;
       if (value is int) return value;
       if (value is String) return int.tryParse(value) ?? fallback;
       return fallback;
     }
 
-    String _parseString(dynamic value, {String fallback = ''}) {
+    String parseString(dynamic value, {String fallback = ''}) {
       if (value == null) return fallback;
       return value.toString();
     }
 
     return Book(
-      id: _parseInt(json['id']),
-      title: _parseString(json['title']),
-      author: _parseString(json['author']),
-      summary: json.containsKey('summary') ? _parseString(json['summary']) : null,
-      audioPath: json.containsKey('audioPath') ? _parseString(json['audioPath']) : null,
-      coverPath: json.containsKey('coverPath') ? _parseString(json['coverPath']) : null,
-      duration: _parseInt(json['duration']) _parseString(json['duration']) : null,
-      category: json.containsKey('category') ? _parseString(json['category']) : null,
+      id: parseInt(json['id']),
+      title: parseString(json['title']),
+      author: parseString(json['author']),
+      summary: json.containsKey('summary') ? parseString(json['summary']) : null,
+      audioPath: json.containsKey('audioPath') ? parseString(json['audioPath']) : null,
+      coverPath: json.containsKey('coverPath') ? parseString(json['coverPath']) : null,
+      duration: json.containsKey('duration') ? parseInt(json['duration']) : null,
+      category: json.containsKey('category') ? parseString(json['category']) : null,
     );
   }
 }

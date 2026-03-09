@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.db.database import get_db
 from backend.models.book import Book
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel, validator
+from typing import Optional, List
 
 router = APIRouter(prefix="/books", tags=["books"])
 
-#impostazione per ricevere un libro
+# impostazione per ricevere/ritornare un libro
 class BookSchema(BaseModel):
     title: str
     author: str
@@ -16,6 +16,10 @@ class BookSchema(BaseModel):
     cover_path: Optional[str] = None
     duration: Optional[int] = None
     category: Optional[str] = None
+
+    
+    class Config:
+        orm_mode = True
 
 #GET /books -- lista tutti i libri
 @router.get("/", response_model=List[BookSchema])
