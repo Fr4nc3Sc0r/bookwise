@@ -36,11 +36,21 @@ class Book {
       id: parseInt(json['id']),
       title: parseString(json['title']),
       author: parseString(json['author']),
-      summary: json.containsKey('summary') ? parseString(json['summary']) : null,
-      audioPath: json.containsKey('audioPath') ? parseString(json['audioPath']) : null,
-      coverPath: json.containsKey('coverPath') ? parseString(json['coverPath']) : null,
-      duration: json.containsKey('duration') ? parseInt(json['duration']) : null,
-      category: json.containsKey('category') ? parseString(json['category']) : null,
+      summary: json.containsKey('summary')
+          ? parseString(json['summary'])
+          : null,
+      audioPath: json.containsKey('audioPath')
+          ? parseString(json['audioPath'])
+          : null,
+      coverPath: json.containsKey('coverPath')
+          ? parseString(json['coverPath'])
+          : null,
+      duration: json.containsKey('duration')
+          ? parseInt(json['duration'])
+          : null,
+      category: json.containsKey('category')
+          ? parseString(json['category'])
+          : null,
     );
   }
 }

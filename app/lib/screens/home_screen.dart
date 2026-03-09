@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import '../services/book_service.dart';
+import 'book_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -78,6 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     book.category ?? '',
                     style: const TextStyle(color: Colors.orange),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookDetailScreen(book: book),
+                      ),
+                    );
+                  },
                 ),
               );
             },
