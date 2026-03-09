@@ -15,7 +15,7 @@ class Book {
     this.summary,
     this.audioPath,
     this.coverPath,
-    required this.duration,
+    this.duration,
     this.category,
   });
 
@@ -39,7 +39,7 @@ class Book {
       summary: json.containsKey('summary') ? _parseString(json['summary']) : null,
       audioPath: json.containsKey('audioPath') ? _parseString(json['audioPath']) : null,
       coverPath: json.containsKey('coverPath') ? _parseString(json['coverPath']) : null,
-      duration: _parseInt(json['duration']),
+      duration: _parseInt(json['duration']) _parseString(json['duration']) : null,
       category: json.containsKey('category') ? _parseString(json['category']) : null,
     );
   }
