@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
+import 'player_screen.dart';
 
 class BookDetailScreen extends StatelessWidget {
   final Book book;
@@ -103,6 +104,32 @@ class BookDetailScreen extends StatelessWidget {
                 ),
               ),
             ],
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                icon: const Icon(Icons.headphones, color: Colors.white),
+                label: const Text(
+                  'Ascolta il riassunto',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayerScreen(book: book),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
