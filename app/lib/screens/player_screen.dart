@@ -26,25 +26,40 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Future<void> _initPlayer() async {
-    if (widget.book.audioPath == null) return;
+  try {
+    print('🎵 Inizio caricamento audio...');
+    
+    await _player.setUrl(
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' //funziona solo con url, quindi usare url anche nel database
+    );
+    
+    print('✅ Audio caricato!');
+    print('Durata: ${_player.duration}');
 
-    try {
-      await _player.setUrl(widget.book.audioPath!);
+    _player.durationStream.listen((duration) {
+      print('📏 Durata ricevuta: $duration');
+      setState(() => _duration = duration ?? Duration.zero);
+    });
 
-      _player.durationStream.listen((duration) {
-        setState(() => _duration == duration ?? Duration.zero);
-      });
-      _player.positionStream.listen((position) {
-        setState(() => _position = position);
-      });
+    _player.positionStream.listen((position) {
+      print('⏱ Posizione: $position');
+      setState(() => _position = position);
+    });
 
-      _player.playerStateStream.listen((state) {
-        setState(() => _isPlaying = state.playing);
-      });
-    } catch (e) {
-      debugPrint('Errore audio : $e');
+    _player.playerStateStream.listen((state) {
+      print('▶️ Stato player: $state');
+      setState(() => _isPlaying = state.playing);
+    });
+
+  } catch (e) {
+    print('❌ Errore: $e');
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Errore: $e'), backgroundColor: Colors.red),
+      );
     }
   }
+}
 
   @override
   void dispose() {
