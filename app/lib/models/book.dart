@@ -40,7 +40,7 @@ class Book {
           ? parseString(json['summary'])
           : null,
       audioPath: json.containsKey('audioPath')
-          ? parseString(json['audioPath'])
+          ? parseString(json['audioPath']) 
           : null,
       coverPath: json.containsKey('coverPath')
           ? parseString(json['coverPath'])

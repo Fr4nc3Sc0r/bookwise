@@ -29,9 +29,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
   try {
     print('🎵 Inizio caricamento audio...');
     
-    await _player.setUrl(
+    /*await _player.setUrl(
       'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' //funziona solo con url, quindi usare url anche nel database
-    );
+    );*/
+
+    await _player.setUrl(widget.book.audioPath!);
     
     print('✅ Audio caricato!');
     print('Durata: ${_player.duration}');
