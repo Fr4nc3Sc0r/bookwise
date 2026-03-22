@@ -39,11 +39,11 @@ class Book {
       summary: json.containsKey('summary')
           ? parseString(json['summary'])
           : null,
-      audioPath: json.containsKey('audioPath')
-          ? parseString(json['audioPath']) 
+      audioPath: json.containsKey('audio_path')
+          ? '${parseString(json['audio_path'])}'
           : null,
-      coverPath: json.containsKey('coverPath')
-          ? parseString(json['coverPath'])
+      coverPath: json.containsKey('cover_path')
+          ? parseString(json['cover_path'])
           : null,
       duration: json.containsKey('duration')
           ? parseInt(json['duration'])

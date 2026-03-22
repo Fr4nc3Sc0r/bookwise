@@ -26,42 +26,42 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Future<void> _initPlayer() async {
-  try {
-    print('🎵 Inizio caricamento audio...');
-    
-    /*await _player.setUrl(
+    try {
+      print('🎵 Inizio caricamento audio...');
+
+      /*await _player.setUrl(
       'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' //funziona solo con url, quindi usare url anche nel database
     );*/
 
-    await _player.setUrl(widget.book.audioPath!);
-    
-    print('✅ Audio caricato!');
-    print('Durata: ${_player.duration}');
+      await _player.setUrl(widget.book.audioPath!);
 
-    _player.durationStream.listen((duration) {
-      print('📏 Durata ricevuta: $duration');
-      setState(() => _duration = duration ?? Duration.zero);
-    });
+      print('✅ Audio caricato!');
+      print(widget.book.audioPath);
+      print('Durata: ${_player.duration}');
 
-    _player.positionStream.listen((position) {
-      print('⏱ Posizione: $position');
-      setState(() => _position = position);
-    });
+      _player.durationStream.listen((duration) {
+        print('📏 Durata ricevuta: $duration');
+        setState(() => _duration = duration ?? Duration.zero);
+      });
 
-    _player.playerStateStream.listen((state) {
-      print('▶️ Stato player: $state');
-      setState(() => _isPlaying = state.playing);
-    });
+      _player.positionStream.listen((position) {
+        print('⏱ Posizione: $position');
+        setState(() => _position = position);
+      });
 
-  } catch (e) {
-    print('❌ Errore: $e');
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore: $e'), backgroundColor: Colors.red),
-      );
+      _player.playerStateStream.listen((state) {
+        print('▶️ Stato player: $state');
+        setState(() => _isPlaying = state.playing);
+      });
+    } catch (e) {
+      print('❌ Errore: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Errore: $e'), backgroundColor: Colors.red),
+        );
+      }
     }
   }
-}
 
   @override
   void dispose() {
