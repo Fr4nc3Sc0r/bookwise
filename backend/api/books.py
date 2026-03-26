@@ -53,3 +53,13 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
 
     return {"detail": "Libro eliminato"}
 
+
+#GET libro BY query (nomeLibro)
+@router.get("/search")
+def search_books(q: str, db : Session = Depends(get_db)):
+    results = db.query(Book).filter(
+        Book.title.ilike(f"%{q}%") |
+        Book.author.ilike(f"%{q}%") |
+        Book.category.ilike(f"%{q}%")
+    ).all()
+    return results

@@ -38,7 +38,28 @@ class BookDetailScreen extends StatelessWidget {
                 color: Colors.grey[850],
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.book, size: 80, color: Colors.orange),
+              clipBehavior: Clip.hardEdge,
+              child: book.coverPath != null
+                  ? Image.network(
+                      book.coverPath!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.book,
+                          size: 80,
+                          color: Colors.orange,
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.orange,
+                          ),
+                        );
+                      },
+                    )
+                  : const Icon(Icons.book, size: 80, color: Colors.orange),
             ),
             const SizedBox(height: 24),
 

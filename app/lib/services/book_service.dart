@@ -39,4 +39,17 @@ class BookService {
       throw Exception('Errore durante l\'eliminazione del libro');
     }
   }
+
+  Future<List<Book>> searchBooks(String query) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/books/search?q=$query'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Book.fromJson(json)).toList();
+    } else {
+      throw Exception('Errore nella ricerca, libro inesistente');
+    }
+  }
 }
