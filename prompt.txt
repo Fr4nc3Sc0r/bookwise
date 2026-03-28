@@ -1,0 +1,117 @@
+Ottima idea! Eccolo pronto da copiare:
+
+---
+
+> Sto creando un'app open source simile a Headway, chiamata **Bookwise**, con Flutter per il frontend e Python/FastAPI per il backend. Sono un neofita e ho bisogno di una guida step by step.
+>
+> **Stack tecnico:**
+> - Frontend: Flutter
+> - Backend: Python + FastAPI + SQLAlchemy
+> - Database: SQLite (file `bookwise.db`)
+> - OS: Windows
+> - Editor: VS Code
+> - Versione SQLAlchemy: 2.0.48
+>
+> **Struttura del progetto:**
+> ```
+> bookwise/
+> ├── app/              ← Flutter (già inizializzato con flutter create)
+> ├── backend/
+> │   ├── __init__.py
+> │   ├── api/
+> │   │   ├── __init__.py
+> │   │   └── main.py
+> │   ├── db/
+> │   │   ├── __init__.py
+> │   │   └── database.py
+> │   ├── models/
+> │   │   ├── __init__.py
+> │   │   └── book.py
+> │   └── venv/         ← ambiente virtuale Python
+> ├── assets/
+> │   ├── books/
+> │   └── audio/
+> └── README.md
+> ```
+>
+> **Problema attuale da risolvere:**
+> Il server FastAPI non si avvia. Il comando per avviarlo è:
+> ```bash
+> backend\venv\Scripts\python.exe -m uvicorn backend.api.main:app --reload
+> ```
+> Lanciato dalla root `bookwise`.
+>
+> Dà questo errore:
+> ```
+> AttributeError: 'function' object has no attribute 'metadata'
+> ```
+> alla riga `Base.metadata.create_all(bind=engine)` in `main.py`.
+> Il problema sembra essere che `Base` viene importato come funzione invece che come istanza.
+>
+> **Contenuto attuale di `backend/db/database.py`:**
+> ```python
+> from sqlalchemy import create_engine
+> from sqlalchemy.orm import sessionmaker, declarative_base
+>
+> DATABASE_URL = "sqlite:///./bookwise.db"
+>
+> engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+> SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+> Base = declarative_base()
+>
+> def get_db():
+>     db = SessionLocal()
+>     try:
+>         yield db
+>     finally:
+>         db.close()
+> ```
+>
+> **Contenuto attuale di `backend/api/main.py`:**
+> ```python
+> from fastapi import FastAPI
+> from backend.db.database import engine, Base
+>
+> Base.metadata.create_all(bind=engine)
+>
+> app = FastAPI(title="Bookwise API", version="1.0.0")
+>
+> @app.get("/")
+> def root():
+>     return {"message": "Bookwise API funziona! 🚀"}
+> ```
+>
+> **Contenuto attuale di `backend/models/book.py`:**
+> ```python
+> from sqlalchemy import Column, Integer, String, Text
+> from backend.db.database import Base
+>
+> class Book(Base):
+>     __tablename__ = "books"
+>     id = Column(Integer, primary_key=True, index=True)
+>     title = Column(String, nullable=False)
+>     author = Column(String, nullable=False)
+>     summary = Column(Text, nullable=True)
+>     audio_path = Column(String, nullable=True)
+>     cover_path = Column(String, nullable=True)
+>     duration = Column(Integer, nullable=True)
+>     category = Column(String, nullable=True)
+> ```
+>
+> **Note importanti:**
+> - Il venv va attivato con `backend\venv\Scripts\activate` ma su Windows/PowerShell dà problemi, quindi si usa sempre il percorso diretto `backend\venv\Scripts\python.exe`
+> - `pip` va usato sempre come `backend\venv\Scripts\pip.exe` perché ci sono più versioni di Python installate in AppData
+> - Il repo è su GitHub, pubblico, con licenza MIT
+>
+> **Prossimi step da completare (in ordine):**
+> 1. Risolvere l'errore `AttributeError: 'function' object has no attribute 'metadata'`
+> 2. Verificare che il server si avvii e risponda su `http://localhost:8000`
+> 3. Creare le route API per i libri (GET, POST)
+> 4. Collegare Flutter al backend
+> 5. Costruire la UI Flutter (home, lista libri, player audio)
+>
+> Riprendi la guida step by step da dove ci siamo fermati.
+
+---
+
+Salvalo dove vuoi — domani incolli questo e ripartiamo esattamente da qui. A presto! 👋

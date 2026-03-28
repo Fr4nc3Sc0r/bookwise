@@ -1,14 +1,21 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/book.dart';
 
 class BookService {
   //ip locale
-  static const String baseUrl = 'http://127.0.0.1:8000';
+  static String get baseUrl => dotenv.env['BASE_URL'] ?? '';
+  static String get apiKey => dotenv.env['API_KEY'] ?? '';
+
+  static Map<String, String> get headers => {
+    'X-API-Key' : apiKey,
+    'Content-Type' : 'application/json',
+  };
 
   //recupera tutti i libri
   Future<List<Book>> getBooks() async {
-    final response = await http.get(Uri.parse('$baseUrl/books/'));
+    final response = await http.get(Uri.parse('$baseUrl/books/'), headers:headers);
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -19,7 +26,7 @@ class BookService {
   }
 
   Future<Book> getBook(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/books/$id'));
+    final response = await http.get(Uri.parse('$baseUrl/books/$id'), headers:headers);
 
     if (response.statusCode == 200) {
       return Book.fromJson(jsonDecode(response.body));
@@ -29,7 +36,7 @@ class BookService {
   }
 
   Future<void> deleteBook(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/books/$id'));
+    final response = await http.delete(Uri.parse('$baseUrl/books/$id'), headers:headers);
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       return;
@@ -43,6 +50,7 @@ class BookService {
   Future<List<Book>> searchBooks(String query) async {
     final response = await http.get(
       Uri.parse('$baseUrl/books/search?q=$query'),
+      headers: headers,
     );
 
     if (response.statusCode == 200) {

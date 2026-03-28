@@ -4,8 +4,10 @@ from backend.db.database import get_db
 from backend.models.book import Book
 from pydantic import BaseModel, validator
 from typing import Optional, List
+from backend.api.security import verify_api_key
+from fastapi import APIRouter, Depends, HTTPException
 
-router = APIRouter(prefix="/books", tags=["books"])
+router = APIRouter(prefix="/books", tags=["books"], Dependencies=[Depends(verify_api_key)])
 
 # impostazione per ricevere/ritornare un libro
 class BookSchema(BaseModel):
