@@ -6,7 +6,7 @@ import os
 load_dotenv("backend/.env")
 
 API_KEY = os.getenv("API_KEY")
-apy_key_header = ApiKeyHeader(name="X-API-key", auto_error=false)
+api_key_header = APIKeyHeader(name="X-API-key", auto_error=False)
 
 async def verify_api_key(api_key: str = Security(api_key_header)):
     if api_key != API_KEY:

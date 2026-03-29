@@ -9,13 +9,16 @@ class BookService {
   static String get apiKey => dotenv.env['API_KEY'] ?? '';
 
   static Map<String, String> get headers => {
-    'X-API-Key' : apiKey,
-    'Content-Type' : 'application/json',
+    'X-API-Key': apiKey,
+    'Content-Type': 'application/json',
   };
 
   //recupera tutti i libri
   Future<List<Book>> getBooks() async {
-    final response = await http.get(Uri.parse('$baseUrl/books/'), headers:headers);
+    final response = await http.get(
+      Uri.parse('$baseUrl/books/'),
+      headers: headers,
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -26,7 +29,10 @@ class BookService {
   }
 
   Future<Book> getBook(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/books/$id'), headers:headers);
+    final response = await http.get(
+      Uri.parse('$baseUrl/books/$id'),
+      headers: headers,
+    );
 
     if (response.statusCode == 200) {
       return Book.fromJson(jsonDecode(response.body));
@@ -36,7 +42,10 @@ class BookService {
   }
 
   Future<void> deleteBook(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/books/$id'), headers:headers);
+    final response = await http.delete(
+      Uri.parse('$baseUrl/books/$id'),
+      headers: headers,
+    );
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       return;

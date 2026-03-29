@@ -7,7 +7,7 @@ from typing import Optional, List
 from backend.api.security import verify_api_key
 from fastapi import APIRouter, Depends, HTTPException
 
-router = APIRouter(prefix="/books", tags=["books"], Dependencies=[Depends(verify_api_key)])
+router = APIRouter(prefix="/books", tags=["books"], dependencies=[Depends(verify_api_key)])
 
 # impostazione per ricevere/ritornare un libro
 class BookSchema(BaseModel):
