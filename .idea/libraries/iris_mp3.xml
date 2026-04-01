@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="iris.mp3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/app/intermediates/compressed_assets/release/compressReleaseAssets/out/assets/flutter_assets/assets/audio/iris.mp3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

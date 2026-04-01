@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="feature-path_provider_android">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/path_provider_android/intermediates/merged_java_res/release/mergeReleaseJavaResource/feature-path_provider_android.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

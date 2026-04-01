@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="feature-audio_session">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/audio_session/intermediates/merged_java_res/release/mergeReleaseJavaResource/feature-audio_session.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
