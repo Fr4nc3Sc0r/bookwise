@@ -64,7 +64,7 @@ class Token(BaseModel):
     user_id: str
 
 class UserResponse(BaseModel):
-    #modello per la risposta dell'utente, rutorna solo dati pubblici e non password
+    #modello per la risposta dell'utente, ritorna solo dati pubblici e non password
     id: str
     email: str
     is_active : bool
@@ -187,7 +187,7 @@ async def register(user_data: UserRegister, db: Session = Depends(get_db)):
 @router.post("/login", response_model=Token)
 async def login(user_data:UserLogin, db: Session = Depends(get_db)):
 
-    user = db.quey(User).filter(User.email == user_data.email).first()
+    user = db.query(User).filter(User.email == user_data.email).first()
 
     if not user or not verify_password(user_data.password, user.hashed_password):
         raise HTTPException(
@@ -212,5 +212,5 @@ async def login(user_data:UserLogin, db: Session = Depends(get_db)):
     }
 
 @router.get("/me", response_model=UserResponse)
-async def get_me(current_user : User = Depends(get_db)):
+async def get_me(current_user : User = Depends(get_current_user)):
     return current_user

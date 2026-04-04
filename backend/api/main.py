@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.db.database import engine, Base
 from backend.api import books
+from backend.api import auth
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 app.include_router(books.router)
 
 @app.get("/")
