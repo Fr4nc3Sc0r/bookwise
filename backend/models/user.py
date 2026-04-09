@@ -17,6 +17,10 @@ class User(Base) :
 
     email = Column(String, unique = True, index = True, nullable = False)
 
+    #ruolo
+
+    role = Column(String, default = "user")
+
     #password hashata con bcrypt
 
     hashed_password = Column(String, nullable = False)

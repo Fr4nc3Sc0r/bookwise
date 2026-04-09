@@ -68,6 +68,7 @@ class UserResponse(BaseModel):
     id: str
     email: str
     is_active : bool
+    role: str
     created_at : datetime
 
     class Config:
@@ -156,6 +157,16 @@ async def get_current_user(token:str = Depends(oauth2_scheme), db: Session = Dep
         raise credential_exception
     
     return user
+
+
+#funzione che verifica il ruolo
+async def require_admin(current_user: User = Depends(get_current_user)) -> User:
+    if(current_user.role != "admin"):
+        raise HTTPException(
+            status_code = status.HTTP_403_FORBIDDEN,
+            detail = {"Accesso negato, riservato agli admin"},
+        )
+    return current_user
 
 #endpoint api routers
 

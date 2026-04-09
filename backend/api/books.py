@@ -6,6 +6,8 @@ from pydantic import BaseModel, validator
 from typing import Optional, List
 from backend.api.security import verify_api_key
 from fastapi import APIRouter, Depends, HTTPException
+from backend.models.user import User
+from backend.api.auth import get_current_user, require_admin
 
 router = APIRouter(prefix="/books", tags=["books"], dependencies=[Depends(verify_api_key)])
 
@@ -35,8 +37,8 @@ def get_book(book_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Libro non trovato, cerca bene")
     return book
 
-@router.post("/")
-def create_book(book: BookSchema, db : Session = Depends(get_db)):
+@router.post("/", dependencies = [Depends(require_admin)])
+def create_book(book: BookSchema, db: Session = Depends(get_db)):
     new_book = Book(**book.dict())
     db.add(new_book)
     db.commit()
@@ -44,7 +46,7 @@ def create_book(book: BookSchema, db : Session = Depends(get_db)):
     return new_book
 
 
-@router.delete("/{book_id}")
+@router.delete("/{book_id}", dependencies = [Depends(require_admin)])
 def delete_book(book_id: int, db: Session = Depends(get_db)):
     book = db.query(Book).filter(Book.id == book_id).first()
     if not book:

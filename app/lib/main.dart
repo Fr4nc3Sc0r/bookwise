@@ -1,3 +1,4 @@
+import 'package:bookwise/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/home_screen.dart';
@@ -16,7 +17,7 @@ class BookwiseApp extends StatelessWidget {
       title: 'Bookwise',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
