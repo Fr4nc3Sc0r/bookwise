@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, Boolean, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 import uuid
-from backend.db.database import Base
 
-
+Base = declarative_base()
 
 class User(Base) :
 
@@ -13,13 +13,13 @@ class User(Base) :
 
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
 
+    #ruolo
+
+    role = Column(String, default="user", nullable=False)
+
     #email utente, indicizzata e unica
 
     email = Column(String, unique = True, index = True, nullable = False)
-
-    #ruolo
-
-    role = Column(String, default = "user")
 
     #password hashata con bcrypt
 
