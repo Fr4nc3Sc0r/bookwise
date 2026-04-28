@@ -1,0 +1,6 @@
+Sviluppo:
+flutter run --dart-define=BASE_URL=http://IP:8000 --dart-define=API_KEY=xK9#mP2$qL7nR4wT8vZ1
+Android:
+flutter build apk --dart-define=BASE_URL=http://93.48.55.156:63458 --dart-define=API_KEY=xK9#mP2$qL7nR4wT8vZ1
+Build web:
+flutter build web --dart-define=BASE_URL=http://IP:8000 --dart-define=API_KEY=xK9#mP2$qL7nR4wT8vZ1
