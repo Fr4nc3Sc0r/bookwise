@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'home_screen.dart';
 import 'register_screen.dart';
+import '../services/auth_manager.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,12 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final Map<String, dynamic> response = await _authService.login(
-      _emailController.text.trim(),
-       _passwordController.text.trim(),
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
       );
 
-    final String token = response['access_token'] as String;
-    print('✅ Token: $token');
+      await AuthManager.saveToken(
+        response['access_token'] as String,
+        response['user_id'] as String,
+      );
 
       if (mounted) {
         Navigator.pushReplacement(
@@ -39,7 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
-      setState(() => _errorMessage = e.toString().replaceAll('Exception: ', ''));
+      setState(
+        () => _errorMessage = e.toString().replaceAll('Exception: ', ''),
+      );
     } finally {
       setState(() => _isLoading = false);
     }
@@ -108,10 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Errore
               if (_errorMessage != null)
-                Text(
-                  _errorMessage!,
-                  style: const TextStyle(color: Colors.red),
-                ),
+                Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
               const SizedBox(height: 24),
 
               // Bottone Login
@@ -141,7 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterScreen(),
+                    ),
                   );
                 },
                 child: const Text(
